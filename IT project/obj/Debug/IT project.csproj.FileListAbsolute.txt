@@ -1,0 +1,57 @@
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\csc.exe
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\csc.exe.config
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\csc.rsp
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\csi.exe
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\csi.exe.config
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\csi.rsp
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\Microsoft.Win32.Primitives.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.AppContext.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Collections.Immutable.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Console.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Diagnostics.Process.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Diagnostics.StackTrace.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.IO.Compression.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.IO.FileSystem.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.IO.FileSystem.Primitives.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.IO.Pipes.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Reflection.Metadata.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.AccessControl.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.Claims.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.Cryptography.Encoding.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.Cryptography.Primitives.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Security.Principal.Windows.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Text.Encoding.CodePages.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Threading.Thread.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.ValueTuple.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Xml.ReaderWriter.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Xml.XmlDocument.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Xml.XPath.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\System.Xml.XPath.XDocument.dll
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\vbc.exe
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\vbc.exe.config
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\vbc.rsp
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\VBCSCompiler.exe
+F:\Visual Studio Projects\IT project\IT project\bin\roslyn\VBCSCompiler.exe.config
+F:\Visual Studio Projects\IT project\IT project\bin\IT project.dll.config
+F:\Visual Studio Projects\IT project\IT project\bin\IT project.dll
+F:\Visual Studio Projects\IT project\IT project\bin\IT project.pdb
+F:\Visual Studio Projects\IT project\IT project\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\Visual Studio Projects\IT project\IT project\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Visual Studio Projects\IT project\IT project\obj\Debug\IT project.csprojResolveAssemblyReference.cache
+F:\Visual Studio Projects\IT project\IT project\obj\Debug\IT project.csproj.CoreCompileInputs.cache
+F:\Visual Studio Projects\IT project\IT project\obj\Debug\IT project.dll
+F:\Visual Studio Projects\IT project\IT project\obj\Debug\IT project.pdb
