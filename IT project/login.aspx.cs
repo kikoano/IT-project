@@ -19,6 +19,10 @@ namespace IT_project
         {
             if (!this.IsPostBack)
             {
+                if (Page.User.Identity.IsAuthenticated)
+                {
+                    Response.Redirect(FormsAuthentication.DefaultUrl, false);
+                }
                 string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
                 string activationCode = Request.QueryString["ActivationCode"];
                 if (string.IsNullOrEmpty(activationCode) || activationCode.Length != 36)
@@ -37,11 +41,11 @@ namespace IT_project
                             con.Close();
                             if (rowsAffected == 1)
                             {
-                                lblActivate.InnerHtml = "Activation successful.";
+                                lblActivate.InnerHtml = "Activation successful";
                             }
                             else
                             {
-                                lblActivate.InnerHtml = "Invalid Activation code.";
+                                lblActivate.InnerHtml = "Invalid Activation code";
                             }
                         }
                     }
@@ -68,10 +72,12 @@ namespace IT_project
                 switch (userId)
                 {
                     case -1:
-                        Response.Write("Username and/or password is incorrect.");
+                        lblError.InnerText="Username and/or password is incorrect.";
+                        lblError.Attributes.Add("style","display:block");
                         break;
                     case -2:
-                        Response.Write("Account has not been activated.");
+                        lblError.InnerText="Account has not been activated.";
+                        lblError.Attributes.Add("style", "display:block");
                         break;
                     default:
                         FormsAuthentication.RedirectFromLoginPage(txtUsername.Value, chkRemember.Checked);
@@ -104,17 +110,22 @@ namespace IT_project
                 switch (userId)
                 {
                     case -1:
-                        message = "Username already exists.\\nPlease choose a different username.";
+                        lblError2.InnerText = "Username already exists. Please choose a different username.";
+                        lblError2.Attributes.Add("style", "display:block");
                         break;
                     case -2:
-                        message = "Supplied email address has already been used.";
+                        lblError2.InnerText = "Supplied email address has already been used.";
+                        lblError2.Attributes.Add("style", "display:block");
                         break;
                     default:
-                        message = "Registration successful.\\nUser Id: " + userId.ToString();
+                        lblActivate.InnerHtml = "Registration successful";
+                        lblError2.Attributes.Add("style", "display:none");
                         SendActivationEmail(userId);
                         break;
                 }
-                ClientScript.RegisterStartupScript(GetType(), "alert", "alert('" + message + "');", true);
+                /*if (userId <= -1)
+                    Response.Redirect(Request.Url.AbsoluteUri.Replace(Request.Url.Query, String.Empty) + "?link=register&message="+message);*/
+
             }
         }
         private void SendActivationEmail(int userId)
@@ -142,7 +153,7 @@ namespace IT_project
                 mm.Subject = "Account Activation";
                 string body = "Hello " + txtRusername.Value.Trim() + ",";
                 body += "<br /><br />Please click the following link to activate your account";
-                body += "<br /><a href = '" + Request.Url.AbsoluteUri+"?ActivationCode=" + activationCode + "'>Click here to activate your account.</a>";
+                body += "<br /><a href = '" + Request.Url.AbsoluteUri.Replace(Request.Url.Query, String.Empty) +"?ActivationCode=" + activationCode + "'>Click here to activate your account.</a>";
                 body += "<br /><br />Thanks";
                 mm.Body = body;
                 mm.IsBodyHtml = true;

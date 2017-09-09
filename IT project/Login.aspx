@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <div runat="server" id="lblActivate"></div>
+                    <div runat="server" id="lblActivate" class="text-center h4 bg-primary text-info"></div>
                     <div class="panel panel-login">
                         <div class="panel-heading">
                             <div class="row">
@@ -35,7 +35,6 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div id="login-form" role="form" style="display: block;">
-
                                         <div class="form-group">
                                             <input runat="server" type="text" name="username" id="txtUsername" tabindex="1" class="form-control" placeholder="Username" value="">
                                         </div>
@@ -53,16 +52,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="text-center">
-                                                        <a href="" tabindex="5" class="forgot-password">Forgot Password?</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div runat="server" id="lblError" class="alert alert-danger" style="display: none;">
+                                            
                                         </div>
-
                                     </div>
                                     <div id="register-form" role="form" style="display: none;">
                                         <div class="form-group">
@@ -83,6 +75,9 @@
                                                     <input runat="server" onserverclick="RegisterToSide" type="submit" name="register-submit" id="register" tabindex="4" class="form-control btn btn-register" value="Register Now">
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div runat="server" enableviewstate="true" id="lblError2" class="alert alert-danger" style="display: none;">
+                                            
                                         </div>
                                     </div>
                                 </div>
