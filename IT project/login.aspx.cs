@@ -17,12 +17,14 @@ namespace IT_project
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            if (Page.User.Identity.IsAuthenticated)
             {
-                if (Page.User.Identity.IsAuthenticated)
-                {
-                    Response.Redirect(FormsAuthentication.DefaultUrl, false);
-                }
+                FormsAuthentication.SignOut();
+                Response.Redirect("~/login.aspx"); // auto log out if logged.
+            }
+
+            else if (!this.IsPostBack)
+            {
                 string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
                 string activationCode = Request.QueryString["ActivationCode"];
                 if (string.IsNullOrEmpty(activationCode) || activationCode.Length != 36)
@@ -56,6 +58,8 @@ namespace IT_project
         protected void LoginToSide(object sender, EventArgs e)
         {
             int userId = 0;
+            bool administrator = false;
+            string email = "";
             string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -66,24 +70,45 @@ namespace IT_project
                     cmd.Parameters.AddWithValue("@Password", txtPassword.Value);
                     cmd.Connection = con;
                     con.Open();
-                    userId = Convert.ToInt32(cmd.ExecuteScalar());
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        userId = reader.GetInt32(0);
+                        if (userId > 0)
+                        {
+                            administrator = Convert.ToBoolean(reader["Administrator"]);
+                            email = reader["Email"].ToString();
+                        }
+                    }
                     con.Close();
                 }
                 switch (userId)
                 {
                     case -1:
-                        lblError.InnerText="Username and/or password is incorrect.";
-                        lblError.Attributes.Add("style","display:block");
+                        lblError.InnerText = "Username and/or password is incorrect.";
+                        lblError.Attributes.Add("style", "display:block");
                         break;
                     case -2:
-                        lblError.InnerText="Account has not been activated.";
+                        lblError.InnerText = "Account has not been activated.";
                         lblError.Attributes.Add("style", "display:block");
                         break;
                     default:
-                        FormsAuthentication.RedirectFromLoginPage(txtUsername.Value, chkRemember.Checked);
+                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, txtUsername.Value, DateTime.Now, DateTime.Now.AddMinutes(2880), chkRemember.Checked, administrator.ToString() + "," + email, FormsAuthentication.FormsCookiePath);
+                        string hash = FormsAuthentication.Encrypt(ticket);
+                        HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+                        if (ticket.IsPersistent)
+                            cookie.Expires = ticket.Expiration;
+                        Response.Cookies.Add(cookie);
+                        Response.Redirect("~/index.aspx");
+                        // FormsAuthentication.RedirectFromLoginPage(txtUsername.Value, chkRemember.Checked); // save user and pass hashed to cookie
                         break;
                 }
             }
+        }
+        private void StoreUserInfoToCookie()
+        {
+
         }
 
         protected void RegisterToSide(object sender, EventArgs e)
@@ -149,11 +174,11 @@ namespace IT_project
                 }
             }
             using (MailMessage mm = new MailMessage("bankbotverify@gmail.com", txtRemail.Value))
-            {       
+            {
                 mm.Subject = "Account Activation";
                 string body = "Hello " + txtRusername.Value.Trim() + ",";
                 body += "<br /><br />Please click the following link to activate your account";
-                body += "<br /><a href = '" + Request.Url.AbsoluteUri.Replace(Request.Url.Query, String.Empty) +"?ActivationCode=" + activationCode + "'>Click here to activate your account.</a>";
+                body += "<br /><a href = '" + Request.Url.AbsoluteUri.Replace(Request.Url.Query, String.Empty) + "?ActivationCode=" + activationCode + "'>Click here to activate your account.</a>";
                 body += "<br /><br />Thanks";
                 mm.Body = body;
                 mm.IsBodyHtml = true;
