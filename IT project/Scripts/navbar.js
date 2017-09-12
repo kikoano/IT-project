@@ -3,6 +3,8 @@
         $('.modal').modal('show');
         $("#lblError").hide();
     });
+    var pathname = window.location.pathname;
+    $('.nav > li > a[href="' + pathname.substr(1) + '"]').parent().addClass('active');
 });
 function validatePage() {
     if (!$.trim($("#password1").val()) || !$.trim($("#password2").val())) {

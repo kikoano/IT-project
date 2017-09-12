@@ -21,6 +21,7 @@ namespace IT_project
             }
             else if (!IsPostBack)
             {
+
                 username.InnerText = HttpContext.Current.User.Identity.Name;
                 username2.InnerText = HttpContext.Current.User.Identity.Name;
                 FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
@@ -28,6 +29,8 @@ namespace IT_project
                 string userData = ticket.UserData;
                 string[] data = userData.Split(',');
                 userEmail.InnerText = data[1];
+                if (data[0]=="True")
+                    createProductLink.Attributes.Add("style", "display:block");
             }
         }
         protected void LogOutClick(object sender, EventArgs e)

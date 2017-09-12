@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="Content\navbar.css" />
     <Content Include="createProduct.aspx" />
+    <Content Include="creditCalculator.aspx" />
     <Content Include="index.aspx" />
     <Content Include="MasterMenu.Master" />
     <None Include="packages.config" />
@@ -76,6 +77,8 @@
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
     <Content Include="Content\LoginRegister.css" />
+    <Content Include="Scripts\calculateCredit.js" />
+    <Content Include="Scripts\createProduct.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -118,6 +121,13 @@
     </Compile>
     <Compile Include="createProduct.aspx.designer.cs">
       <DependentUpon>createProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="creditCalculator.aspx.cs">
+      <DependentUpon>creditCalculator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="creditCalculator.aspx.designer.cs">
+      <DependentUpon>creditCalculator.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -14,6 +14,9 @@
     font-size: 87px;
 }
 
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: #EF92A5;
+}
 #myBody {
     margin-top: 100px;
 }
