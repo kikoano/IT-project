@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\generatedTable.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="createProduct.aspx" />
     <Content Include="creditCalculator.aspx" />

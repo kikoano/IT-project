@@ -19,7 +19,6 @@ namespace IT_project
             if (!IsPostBack)
             {
                 FillList();
-                ViewState["newProduct"] = true;
             }
         }
 
@@ -47,7 +46,6 @@ namespace IT_project
         {
             if (productsList.SelectedIndex == 0)
             {
-                ViewState["newProduct"] = true;
                 addNew.InnerText = "Додади";
                 remove.InnerText = "Избриши";
             }
@@ -55,15 +53,14 @@ namespace IT_project
             {
                 addNew.InnerText = "Промени";
                 remove.InnerText = "Избриши";
-                ViewState["newProduct"] = false;
-            }
             FillFields();
+            }
 
         }
         protected void AddProduct(object sender, EventArgs e)
         {
             string query;
-            if ((bool)ViewState["newProduct"])
+            if (productsList.SelectedIndex == 0)
             {
                 query = "INSERT INTO CreditProducts (ProductName, IznozDo, RokMeseciDo, KamStapka, PromoPeriod, PromoStavka, VidOtplata, ProvAplIznos, ProvAplProcent, ProvDrugo, GProvUpravProcent, GProvDrugo, MProvUpravProcent, MProvDrugo) VALUES(@ProductName, @IznozDo, @RokMeseciDo, @KamStapka, @PromoPeriod, @PromoStavka, @VidOtplata, @ProvAplIznos, @ProvAplProcent, @ProvDrugo, @GProvUpravProcent, @GProvDrugo, @MProvUpravProcent, @MProvDrugo); ";
             }
@@ -122,12 +119,11 @@ namespace IT_project
             cmd.ExecuteNonQuery();
             conn.Close();
             FillList();
-            ViewState["newProduct"] = true;
             EmptyFields();
         }
         protected void Remove(object sender, EventArgs e)
         {
-            if ((bool)ViewState["newProduct"])
+            if (productsList.SelectedIndex == 0)
             {
                 EmptyFields();
             }
@@ -143,7 +139,6 @@ namespace IT_project
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 FillList();
-                ViewState["newProduct"] = true;
                 EmptyFields();
             }
         }
@@ -169,8 +164,6 @@ namespace IT_project
 
         private void FillFields()
         {
-            if (!(bool)ViewState["newProduct"])
-            {
                 productName.Value = productsList.Items[productsList.SelectedIndex].ToString();
                 IznozDo.Value = ((DataSet)ViewState["CreditProducts"]).Tables["CreditProducts"].Rows[productsList.SelectedIndex - 1]["IznozDo"].ToString();
                 rokMeseciDo.Value = ((DataSet)ViewState["CreditProducts"]).Tables["CreditProducts"].Rows[productsList.SelectedIndex - 1]["RokMeseciDo"].ToString();
@@ -195,7 +188,6 @@ namespace IT_project
                 {
 
                 }
-            }
         }
     }
 }
