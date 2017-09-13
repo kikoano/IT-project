@@ -4,7 +4,10 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -41,6 +44,62 @@ namespace IT_project
             productsList.SelectedIndex = 0;
             productName.Value = productsList.Items[productsList.SelectedIndex].Value;
         }
+        private string CreateHtmlPageTable()
+        {
+            string html = @"<html> <head> <style> .datagrid table { border-collapse: collapse; text-align: right; width: 100%; }
+.datagrid { font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+ .datagrid table td, .datagrid table th { padding: 3px 10px; }
+ .datagrid table thead th { background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) ); background: -moz-linear-gradient( center top, #006699 5%, #00557F 100% ); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F'); background-color: #006699; color: #FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #0070A8; }
+ .datagrid table thead th:first-child { border: none; }
+ .datagrid table tbody td { color: #00496B; border-left: 1px solid #E1EEF4; font-size: 12px; font-weight: normal; }
+ .datagrid table tbody .alt td { background: #E1EEF4; color: #00496B; }
+ .datagrid table tbody td:first-child { border-left: none; }
+ .datagrid table tbody tr:last-child td { border-bottom: none; } .myBtnS { margin-bottom: 8px; }
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+ .well > table > tbody > tr > td{
+ padding-left:50px;
+ }
+</style> </head> <body>";
+            html += ViewState["Parametars"];
+            html += "<div class='well'>" + ViewState["Vkupno"] + "</div>";
+            html += ViewState["GeneratedTable"];
+            return html;
+        }
+        protected void Download(object sender, EventArgs e)
+        {
+            Response.ContentType = "text/html";
+            Response.AddHeader("content-disposition", "attachment; filename=" + ViewState["ProductName"] + ".html");
+            Response.Write(CreateHtmlPageTable());
+            Response.End();
+        }
+        protected void Send(object sender, EventArgs e)
+        {
+
+            using (MailMessage mm = new MailMessage("bankbotverify@gmail.com", emailInput.Value))
+            {
+                mm.Subject = "Амортизицијален план";
+                string body = CreateHtmlPageTable();
+                mm.Body = body;
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential("bankbotverify@gmail.com", "sje931jfj29f29fj2s");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+            }
+        }
         protected void ListSelected(object sender, EventArgs e)
         {
             if (productsList.SelectedIndex == 0)
@@ -54,10 +113,34 @@ namespace IT_project
                 DisableFields(true);
             }
         }
-        protected void Remove(object sender, EventArgs e)
+        protected void SaveToData(object sender, EventArgs e)
+        {
+            FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
+            FormsAuthenticationTicket ticket = id.Ticket;
+            string userData = ticket.UserData;
+            string[] data = userData.Split(',');
+
+            string query= "INSERT INTO Calculations(UserId, Name, Data, DateCreated, Parametars, Vkupno) VALUES(@UserId, @Name, @Data, @DateCreated, @Parametars, @Vkupno); ";
+            string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
+
+            SqlConnection conn = new SqlConnection(constr);
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@UserId", data[2]);
+            cmd.Parameters.AddWithValue("@Name", ViewState["ProductName"]);
+            cmd.Parameters.AddWithValue("@Data", ViewState["GeneratedTable"]);
+            cmd.Parameters.AddWithValue("@DateCreated", DateTime.Now);
+            cmd.Parameters.AddWithValue("@Parametars", ViewState["Parametars"]);
+            cmd.Parameters.AddWithValue("@Vkupno", ViewState["Vkupno"]);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + ViewState["ProductName"] + " е зачуван!" + "');", true);
+        }
+            protected void Remove(object sender, EventArgs e)
         {
             if (productsList.SelectedIndex == 0)
             {
+                productName.Value = "";
                 IznozDo.Value = "";
                 rokMeseciDo.Value = "";
                 kamStapka.Value = "";
@@ -115,6 +198,7 @@ namespace IT_project
             GenerateTable();
             save.Disabled = false;
             send.Disabled = false;
+            send.Style.Remove("ds");
             download.Disabled = false;
         }
         private void FillFields()
@@ -150,6 +234,7 @@ namespace IT_project
 
         private void GenerateTable()
         {
+            vkp.Visible = true;
             generatedTable.InnerHtml = @"<div class='datagrid'>
     <table>
         <thead>
@@ -184,7 +269,7 @@ namespace IT_project
 
             generatedTable.InnerHtml += "<tr>";
             generatedTable.InnerHtml += "<td>" + 0 + "</td>";
-            generatedTable.InnerHtml += "<td>" + date.ToString() + "</td>";
+            generatedTable.InnerHtml += "<td>" + date.ToString("dd.MM.yyyy") + "</td>";
             generatedTable.InnerHtml += "<td>" + ostatok.ToString("#,###.00") + "</td>";
             generatedTable.InnerHtml += "<td>" + "" + "</td>";
             generatedTable.InnerHtml += "<td>" + "" + "</td>";
@@ -212,9 +297,14 @@ namespace IT_project
                 }
                 paricenTek = (-1) * (kamata + rataGlav + prov);
                 date = date.AddMonths(1);
-                generatedTable.InnerHtml += "<tr>";
+                if (i % 12 == 0)
+                {
+                    generatedTable.InnerHtml += "<tr style='background-color:#B0DEF2'>";
+                }
+                else
+                    generatedTable.InnerHtml += "<tr>";
                 generatedTable.InnerHtml += "<td>" + i + "</td>";
-                generatedTable.InnerHtml += "<td>" + date.ToString() + "</td>";
+                generatedTable.InnerHtml += "<td>" + date.ToString("dd.MM.yyyy") + "</td>";
                 generatedTable.InnerHtml += "<td>" + ostatok.ToString("#,###.00") + "</td>";
                 generatedTable.InnerHtml += "<td>" + kamata.ToString("#,###.00") + "</td>";
                 generatedTable.InnerHtml += "<td>" + rataGlav.ToString("#,###.00") + "</td>";
@@ -232,6 +322,49 @@ namespace IT_project
 
             }
             generatedTable.InnerHtml += "</tbody></table></div>";
+            ViewState["GeneratedTable"] = generatedTable.InnerHtml;
+            string vkupno = "<center>Вкупно провизии: <b>" + vkupnoProvizii.ToString("#,###.00") + "</b>&nbsp&nbsp&nbsp&nbsp&nbsp Вкупно камата: <b>" + vkupnoKamata.ToString("#,###.00") + "</b>&nbsp&nbsp&nbsp&nbsp&nbsp Вкупно паричен тек: <b>" + ((vkupnoParicenTek)).ToString("#,###.00") + "</b></center>";
+            vkp.InnerHtml = vkupno;
+            ViewState["Vkupno"] = vkupno;
+            string html = "<center class='well'><table><tbody>";
+            html += "<tr>";
+            html += "<td>Назив</td>"; html += "<td>" + productName.Value + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Износ до</td>"; html += "<td>" + double.Parse(IznozDo.Value).ToString("#,###.00") + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Рок(месеци)</td>"; html += "<td>" + int.Parse(rokMeseciDo.Value) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Камата стапка</td>"; html += "<td>" + double.Parse(kamStapka.Value).ToString("#,###.00") + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Промотивен период<td>" + ToStringE(m_promoPeriod) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Промотивна стапка</td>"; html += "<td>" + ToStringE(m_promoStavka) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Вид одплата</td>"; html += "<td>" + vidOtplata.Items[vidOtplata.SelectedIndex].Text+ "</td></tr>";
+            html += "<tr>";
+            html += "<td>Апликација(износ)</td>"; html += "<td>" + ToStringE(m_provAplIznos) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Апликација(%)</td>"; html += "<td>" + ToStringE(m_provAplProcent) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Провизија друго</td>"; html += "<td>" + ToStringE(m_provDrugo) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Годишна управувачка(%)</td>"; html += "<td>" + ToStringE(m_GProvUpravProcent) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Годишна управувачка(износ)</td>"; html += "<td>" + ToStringE(m_GProvDrugo)+ "</td></tr>";
+            html += "<tr>";
+            html += "<td>Месечна управувачка(%)</td>"; html += "<td>" + ToStringE(m_MProvUpravProcent) + "</td></tr>";
+            html += "<tr>";
+            html += "<td>Месечна управувачка(износ)</td>"; html += "<td>" + ToStringE(m_MProvDrugo) + "</td></tr>";
+            html += "</tbody></table></center>";
+            ViewState["Parametars"]= html;
+            ViewState["ProductName"] = productName.Value;
+        }
+        private string ToStringE(double d)
+        {
+            if (d == 0)
+                return "";
+            else
+                return d.ToString("#,###.00");
         }
     }
 }

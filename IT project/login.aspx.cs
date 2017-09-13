@@ -94,7 +94,7 @@ namespace IT_project
                         lblError.Attributes.Add("style", "display:block");
                         break;
                     default:
-                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, txtUsername.Value, DateTime.Now, DateTime.Now.AddMinutes(2880), chkRemember.Checked, administrator.ToString() + "," + email, FormsAuthentication.FormsCookiePath);
+                        FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, txtUsername.Value, DateTime.Now, DateTime.Now.AddMinutes(2880), chkRemember.Checked, administrator.ToString() + "," + email+","+ userId, FormsAuthentication.FormsCookiePath);
                         string hash = FormsAuthentication.Encrypt(ticket);
                         HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
                         if (ticket.IsPersistent)

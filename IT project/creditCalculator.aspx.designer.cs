@@ -40,15 +40,6 @@ namespace IT_project {
         protected global::System.Web.UI.HtmlControls.HtmlButton remove;
         
         /// <summary>
-        /// save control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton save;
-        
-        /// <summary>
         /// send control.
         /// </summary>
         /// <remarks>
@@ -65,6 +56,15 @@ namespace IT_project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton download;
+        
+        /// <summary>
+        /// save control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton save;
         
         /// <summary>
         /// lblError3 control.
@@ -202,6 +202,15 @@ namespace IT_project {
         protected global::System.Web.UI.HtmlControls.HtmlInputText MProvDrugo;
         
         /// <summary>
+        /// vkp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vkp;
+        
+        /// <summary>
         /// generatedTable control.
         /// </summary>
         /// <remarks>
@@ -209,5 +218,23 @@ namespace IT_project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl generatedTable;
+        
+        /// <summary>
+        /// emailInput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl emailInput;
+        
+        /// <summary>
+        /// cpBtnE control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton cpBtnE;
     }
 }

@@ -17,6 +17,25 @@
 .nav > li > a:hover, .nav > li > a:focus {
     background-color: #EF92A5;
 }
+
 #myBody {
     margin-top: 100px;
 }
+
+#footer {
+    background: #EDEFF1;
+    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #DDDDDD;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35px;
+    text-align: center;
+}
+
+#footer p {
+        padding: 10.5px;
+        margin: 0px;
+        line-height: 100%;
+    }

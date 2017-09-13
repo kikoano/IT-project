@@ -14,11 +14,11 @@
                 <select runat="server" onserverchange="ListSelected" onchange="javascript:form1.submit();" id="productsList" class="form-control" size="10">
                 </select>
             </div>
-            <button clientidmode="Static" runat="server" id="addNew" onserverclick="Calculate" onclick="if (!validate2()) {return false;}" class="btn btn-success">Пресметај</button>
-            <button clientidmode="Static" runat="server" id="remove" onserverclick="Remove" class="btn btn-danger">Избриши</button>
-            <button clientidmode="Static" runat="server" id="save" class="btn btn-primary" disabled>Зачивај</button>
-            <button clientidmode="Static" runat="server" id="send" class="btn btn-primary" disabled>Прати на емаил</button>
-            <button clientidmode="Static" runat="server" id="download" class="btn btn-primary" disabled>Предземи</button>
+            <button clientidmode="Static" runat="server" id="addNew" onserverclick="Calculate" onclick="if (!validate2()) {return false;}" class="btn btn-success myBtnS">Пресметај</button>
+            <button clientidmode="Static" runat="server" id="remove" onserverclick="Remove" class="btn btn-danger myBtnS">Избриши</button>
+            <button clientidmode="Static" runat="server" id="send" class="btn btn-primary btn-sm" disabled>Прати на емаил</button>
+            <button clientidmode="Static" runat="server" id="download" onserverclick="Download" class="btn btn-primary btn-sm" disabled>Предземи</button>
+            <button clientidmode="Static" runat="server" id="save" onserverclick="SaveToData" class="btn btn-primary btn-sm" disabled>Зачувај</button>
             <div enableviewstate="false" clientidmode="Static" runat="server" id="lblError3" class="alert alert-danger" style="display: none;">
             </div>
         </div>
@@ -139,7 +139,31 @@
             </div>
         </div>
     </div>
-    <div runat="server" id="generatedTable" class="row">
-        
+    <div runat="server" visible="false" id="vkp" class="well well-sm"></div>
+    <div runat="server" id="generatedTable" class="row">        
     </div>
+    <div id="emailModal" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Прати на емаил</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Enter new Password</p>
+                        <div role="form" style="display: block;">
+                            <div class="form-group">
+                                <input clientidmode="Static" runat="server" type="email" name="email" id="emailInput" tabindex="1" class="form-control" placeholder="Внеси емаил" value="">
+                            </div>
+                        </div>
+                        <div id="lblErrorE" class="alert alert-danger" style="display: none;">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button runat="server" onclick="if (!validateEmail()) {return false;}" onserverclick="Send" id="cpBtnE" type="button" class="btn btn-primary">Прати</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
 </asp:Content>

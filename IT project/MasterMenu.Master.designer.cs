@@ -100,7 +100,7 @@ namespace IT_project {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText password1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword password1;
         
         /// <summary>
         /// password2 control.
