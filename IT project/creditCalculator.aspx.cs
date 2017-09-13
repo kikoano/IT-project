@@ -120,17 +120,15 @@ namespace IT_project
             string userData = ticket.UserData;
             string[] data = userData.Split(',');
 
-            string query= "INSERT INTO Calculations(UserId, Name, Data, DateCreated, Parametars, Vkupno) VALUES(@UserId, @Name, @Data, @DateCreated, @Parametars, @Vkupno); ";
+            string query= "INSERT INTO Calculations(UserId, Name, Data, DateCreated) VALUES(@UserId, @Name, @Data, @DateCreated); ";
             string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
 
             SqlConnection conn = new SqlConnection(constr);
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@UserId", data[2]);
             cmd.Parameters.AddWithValue("@Name", ViewState["ProductName"]);
-            cmd.Parameters.AddWithValue("@Data", ViewState["GeneratedTable"]);
+            cmd.Parameters.AddWithValue("@Data", CreateHtmlPageTable());
             cmd.Parameters.AddWithValue("@DateCreated", DateTime.Now);
-            cmd.Parameters.AddWithValue("@Parametars", ViewState["Parametars"]);
-            cmd.Parameters.AddWithValue("@Vkupno", ViewState["Vkupno"]);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();

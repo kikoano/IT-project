@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\generatedTable.css" />
+    <Content Include="Content\index.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="createProduct.aspx" />
     <Content Include="creditCalculator.aspx" />
@@ -80,6 +81,7 @@
     <Content Include="Content\LoginRegister.css" />
     <Content Include="Scripts\calculateCredit.js" />
     <Content Include="Scripts\createProduct.js" />
+    <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
