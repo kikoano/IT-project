@@ -24,34 +24,43 @@ namespace IT_project
         }
         private void FillTable()
         {
-            string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
-            string query = "SELECT * FROM Calculations ORDER BY DateCreated DESC";
-
-            SqlConnection conn = new SqlConnection(constr);
-            SqlCommand cmd = new SqlCommand(query, conn);
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            conn.Open();
-            adapter.Fill(ds, "Calculations");
-            conn.Close();
-            adapter.Dispose();
-            viewCalc1.InnerHtml += "<table id='myTable' class='table table-hover table-striped'><thead><tr><th>#</th><th>Име</th><th>Дата на креација</th><th>Акција<th><tr><thead><tbody>";
-            if (ds.Tables["Calculations"].Rows.Count > 0)
+            if (HttpContext.Current.User != null && HttpContext.Current.User.Identity is FormsIdentity)
             {
-                for (int i = 0; i < ds.Tables["Calculations"].Rows.Count; i++)
-                {
-                    viewCalc1.InnerHtml += "<tr>";
-                    viewCalc1.InnerHtml += "<td>" + (i + 1) + "</td>";
-                    viewCalc1.InnerHtml += "<td>" + ds.Tables["Calculations"].Rows[i]["Name"].ToString() + "</td>";
-                    viewCalc1.InnerHtml += "<td>" + ds.Tables["Calculations"].Rows[i]["DateCreated"].ToString() + "</td>";
-                    viewCalc1.InnerHtml += @"<td class='text-center'><a class='btn btn-info btn-xs myView' value='" + ds.Tables["Calculations"].Rows[i]["CalculationId"].ToString() + "' href='#'><span class='glyphicon glyphicon-eye-open'></span>View</a>&nbsp&nbsp<a href='#' class='btn btn-danger btn-xs myDelete' value='" + ds.Tables["Calculations"].Rows[i]["CalculationId"].ToString() + "' class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-remove'></span>Delete</a></td>";
-                    viewCalc1.InnerHtml += "</tr>";
-                }
 
+                FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
+                FormsAuthenticationTicket ticket = id.Ticket;
+                string userData = ticket.UserData;
+                string[] data = userData.Split(',');
+                string constr = ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
+                string query = "SELECT * FROM Calculations WHERE UserId=@UserId ORDER BY DateCreated DESC";
+
+                SqlConnection conn = new SqlConnection(constr);
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserId", data[2]);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                conn.Open();
+                adapter.Fill(ds, "Calculations");
+                conn.Close();
+                adapter.Dispose();
+                viewCalc1.InnerHtml += "<table id='myTable' class='table table-hover table-striped'><thead><tr><th>#</th><th>Име</th><th>Дата на креација</th><th>Акција<th><tr><thead><tbody>";
+                if (ds.Tables["Calculations"].Rows.Count > 0)
+                {
+                    for (int i = 0; i < ds.Tables["Calculations"].Rows.Count; i++)
+                    {
+                        viewCalc1.InnerHtml += "<tr>";
+                        viewCalc1.InnerHtml += "<td>" + (i + 1) + "</td>";
+                        viewCalc1.InnerHtml += "<td>" + ds.Tables["Calculations"].Rows[i]["Name"].ToString() + "</td>";
+                        viewCalc1.InnerHtml += "<td>" + ds.Tables["Calculations"].Rows[i]["DateCreated"].ToString() + "</td>";
+                        viewCalc1.InnerHtml += @"<td class='text-center'><a class='btn btn-info btn-xs myView' value='" + ds.Tables["Calculations"].Rows[i]["CalculationId"].ToString() + "' href='#'><span class='glyphicon glyphicon-eye-open'></span>View</a>&nbsp&nbsp<a href='#' class='btn btn-danger btn-xs myDelete' value='" + ds.Tables["Calculations"].Rows[i]["CalculationId"].ToString() + "' class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-remove'></span>Delete</a></td>";
+                        viewCalc1.InnerHtml += "</tr>";
+                    }
+
+                }
+                viewCalc1.InnerHtml += "</tbody></table>";
+                if (ds.Tables["Calculations"].Rows.Count <= 0)
+                    viewCalc1.InnerHtml += "<div id='empty' class='well'>Empty</div>";
             }
-            viewCalc1.InnerHtml += "</tbody></table>";
-            if (ds.Tables["Calculations"].Rows.Count <= 0)
-                viewCalc1.InnerHtml += "<div id='empty' class='well'>Empty</div>";
         }
         [WebMethod]   
         public static string GetCalculationsData(string id)

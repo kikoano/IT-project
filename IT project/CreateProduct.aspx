@@ -1,7 +1,7 @@
 ﻿<%@ page title="" language="C#" masterpagefile="~/MasterMenu.Master" autoeventwireup="true" codebehind="createProduct.aspx.cs" inherits="IT_project.CreateProduct" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
-    Create Credit Product
+    Креирирај продукти
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
     <script src="Scripts/createProduct.js"></script>

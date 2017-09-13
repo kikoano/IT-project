@@ -1,7 +1,7 @@
 ﻿<%@ page title="" language="C#" masterpagefile="~/MasterMenu.Master" autoeventwireup="true" codebehind="creditCalculator.aspx.cs" inherits="IT_project.CreditCalculator" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
-    Калкулатор за Кредит
+    Кредитен калкулатор
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
     <link href="Content/generatedTable.css" rel="stylesheet" />

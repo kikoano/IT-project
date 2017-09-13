@@ -1,7 +1,7 @@
 ﻿<%@ page title="" language="C#" masterpagefile="~/MasterMenu.Master" autoeventwireup="true" codebehind="index.aspx.cs" inherits="IT_project.Index" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="server">
-    Дома
+    Мои АМ планови
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
     <link href="Content/index.css" rel="stylesheet" />
